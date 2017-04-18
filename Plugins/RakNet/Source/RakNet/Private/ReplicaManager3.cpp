@@ -723,6 +723,11 @@ PluginReceiveResult ReplicaManager3::OnReceive(Packet *packet)
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#pragma warning(disable: 4458)
+#endif
 
 void Connection_RM3::AutoConstructByQuery(ReplicaManager3 *replicaManager3, WorldId worldId)
 {
@@ -1154,7 +1159,7 @@ PluginReceiveResult ReplicaManager3::OnConstruction(Packet *packet, unsigned cha
 		bsIn.AlignReadToByteBoundary();
 	}
 
-    RakAssert(constructionTickStack.Size()==constructionObjectListSize);
+	RakAssert(constructionTickStack.Size()==constructionObjectListSize);
 	RakAssert(actuallyCreateObjectList.Size()==constructionObjectListSize);
 
 	RakNet::BitStream empty;
@@ -2592,5 +2597,9 @@ RM3ActionOnPopConnection Replica3::QueryActionOnPopConnection_PeerToPeer(RakNet:
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // _RAKNET_SUPPORT_*

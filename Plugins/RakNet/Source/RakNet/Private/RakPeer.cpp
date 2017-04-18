@@ -358,6 +358,11 @@ RakPeer::~RakPeer()
 // 		pluginListNTS[i]->SetRakPeerInterface(0);
 }
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // \brief Starts the network threads, opens the listen port.
 // You must call this before calling Connect().
@@ -1568,7 +1573,7 @@ Packet* RakPeer::Receive( void )
 
 		for (i=0; i < pluginListTS.Size(); i++)
 		{
- 			pluginResult=pluginListTS[i]->OnReceive(packet);
+			pluginResult=pluginListTS[i]->OnReceive(packet);
 			if (pluginResult==RR_STOP_PROCESSING_AND_DEALLOCATE)
 			{
 				DeallocatePacket( packet );
@@ -1764,7 +1769,7 @@ ConnectionState RakPeer::GetConnectionState(const AddressOrGUID systemIdentifier
 		return IS_CONNECTING;
 	case RemoteSystemStruct::CONNECTED:
 		return IS_CONNECTED;
-    default:
+	default:
 		return IS_NOT_CONNECTED;
 	}
 
@@ -2980,7 +2985,7 @@ bool RakPeer::IsNetworkSimulatorActive( void )
 void RakPeer::WriteOutOfBandHeader(RakNet::BitStream *bitStream)
 {
 	bitStream->Write((MessageID)ID_OUT_OF_BAND_INTERNAL);
- 	bitStream->Write(myGuid);
+	bitStream->Write(myGuid);
 	bitStream->WriteAlignedBytes((const unsigned char*) OFFLINE_MESSAGE_DATA_ID, sizeof(OFFLINE_MESSAGE_DATA_ID));
 }
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -5267,7 +5272,7 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 			int outcome;
 			if (IPAddrInUse & GUIDInUse)
 			{
- 				if (rssFromSA==rssFromGuid && rssFromSA->connectMode==RakPeer::RemoteSystemStruct::UNVERIFIED_SENDER)
+				if (rssFromSA==rssFromGuid && rssFromSA->connectMode==RakPeer::RemoteSystemStruct::UNVERIFIED_SENDER)
 				{
 					// ID_OPEN_CONNECTION_REPLY if they are the same
 					outcome=1;
@@ -5422,6 +5427,11 @@ bool ProcessOfflineNetworkPacket( SystemAddress systemAddress, const char *data,
 
 	return false;
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void ProcessNetworkPacket( SystemAddress systemAddress, const char *data, const int length, RakPeer *rakPeer, RakNet::TimeUS timeRead, BitStream &updateBitStream )
 {
@@ -5957,7 +5967,7 @@ bool RakPeer::RunUpdateCycle(BitStream &updateBitStream )
 				{
 					if ( (unsigned char)(data)[0] == ID_CONNECTION_REQUEST )
 					{
- 						ParseConnectionRequestPacket(remoteSystem, systemAddress, (const char*)data, byteSize);
+						ParseConnectionRequestPacket(remoteSystem, systemAddress, (const char*)data, byteSize);
 						rakFree_Ex(data, _FILE_AND_LINE_ );
 					}
 					else
@@ -6078,7 +6088,7 @@ bool RakPeer::RunUpdateCycle(BitStream &updateBitStream )
 					else if ( (unsigned char)data[0] == ID_CONNECTED_PING && byteSize == sizeof(unsigned char)+sizeof(RakNet::Time) )
 					{
 						RakNet::BitStream inBitStream( (unsigned char *) data, byteSize, false );
- 						inBitStream.IgnoreBits(8);
+						inBitStream.IgnoreBits(8);
 						RakNet::Time sendPingTime;
 						inBitStream.Read(sendPingTime);
 
@@ -6327,7 +6337,7 @@ RAK_THREAD_DECLARATION(RakNet::UpdateNetworkLoop)
 	dueTime.QuadPart = -10000 * rakPeer->threadSleepTimer; // 10000 is 1 ms?
 
 	BOOL success = SetWaitableTimer( timerHandle, &dueTime, rakPeer->threadSleepTimer, NULL, NULL, FALSE );
-    (void) success;
+	(void) success;
 	RakAssert( success );
 
 #endif

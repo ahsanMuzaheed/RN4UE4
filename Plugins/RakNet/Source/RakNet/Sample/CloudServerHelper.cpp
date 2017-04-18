@@ -255,6 +255,12 @@ MessageID CloudServerHelper::AuthenticateRemoteServerBlocking(RakPeerInterface *
 		RakSleep(30);
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void CloudServerHelper::SetupPlugins(
 	RakNet::CloudServer *cloudServer,
 	RakNet::CloudServerHelperFilter *sampleFilter,
@@ -275,6 +281,11 @@ void CloudServerHelper::SetupPlugins(
 	// Do not add systems to the graph unless first validated as a server through the TwoWayAuthentication plugin
 	connectionGraph2->SetAutoProcessNewConnections(false);
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void CloudServerHelper::OnPacket(Packet *packet, RakPeerInterface *rakPeer, CloudClient *cloudClient, RakNet::CloudServer *cloudServer, RakNet::FullyConnectedMesh2 *fullyConnectedMesh2, TwoWayAuthentication *twoWayAuthentication, ConnectionGraph2 *connectionGraph2)
 {
 	switch (packet->data[0])

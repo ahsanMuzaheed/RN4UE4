@@ -264,6 +264,12 @@ void ConnectionGraph2::OnNewConnection(const SystemAddress &systemAddress, RakNe
 	if (autoProcessNewConnections)
 		AddParticipant(systemAddress, rakNetGUID);
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 PluginReceiveResult ConnectionGraph2::OnReceive(Packet *packet)
 {
 	if (packet->data[0]==ID_REMOTE_CONNECTION_LOST || packet->data[0]==ID_REMOTE_DISCONNECTION_NOTIFICATION)
@@ -308,5 +314,9 @@ PluginReceiveResult ConnectionGraph2::OnReceive(Packet *packet)
 	
 	return RR_CONTINUE_PROCESSING;
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // _RAKNET_SUPPORT_*

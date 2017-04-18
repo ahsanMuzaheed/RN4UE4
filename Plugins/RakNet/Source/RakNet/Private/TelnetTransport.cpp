@@ -50,7 +50,7 @@ TelnetTransport::~TelnetTransport()
 bool TelnetTransport::Start(unsigned short port, bool serverMode)
 {
 	(void) serverMode;
-    AutoAllocate();
+	AutoAllocate();
 	RakAssert(serverMode);
 	return tcpInterface->Start(port, 64);
 }
@@ -103,6 +103,12 @@ void TelnetTransport::CloseConnection( SystemAddress systemAddress )
 {
 	tcpInterface->CloseConnection(systemAddress);
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 Packet* TelnetTransport::Receive( void )
 {
 	if (tcpInterface==0) return 0;
@@ -222,6 +228,11 @@ Packet* TelnetTransport::Receive( void )
 	tcpInterface->DeallocatePacket(p);
 	return 0;
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void TelnetTransport::DeallocatePacket( Packet *packet )
 {
 	if (tcpInterface==0) return;

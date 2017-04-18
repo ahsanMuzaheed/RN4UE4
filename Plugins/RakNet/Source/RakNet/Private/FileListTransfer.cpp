@@ -148,6 +148,12 @@ unsigned short FileListTransfer::SetupReceive(FileListTransferCBInterface *handl
 	return oldId;
 }
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#pragma warning(disable: 4458)
+#endif
+
 void FileListTransfer::Send(FileList *fileList, RakNet::RakPeerInterface *rakPeer, SystemAddress recipient, unsigned short setID, PacketPriority priority, char orderingChannel, IncrementalReadInterface *_incrementalReadInterface, unsigned int _chunkSize)
 {
 	for (unsigned int flpcIndex=0; flpcIndex < fileListProgressCallbacks.Size(); flpcIndex++)
@@ -1128,6 +1134,11 @@ void FileListTransfer::OnReferencePushAck(Packet *packet)
 	inBitStream.Read(setId);
 	SendIRIToAddress(packet->systemAddress, setId);
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void FileListTransfer::RemoveFromList(FileToPushRecipient *ftpr)
 {
 	fileToPushRecipientListMutex.Lock();

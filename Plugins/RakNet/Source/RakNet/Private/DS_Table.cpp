@@ -194,6 +194,12 @@ Table::Cell::Cell(double numericValue, char *charValue, void *ptr, ColumnType ty
 {
 	SetByType(numericValue,charValue,ptr,type);
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void Table::Cell::SetByType(double numericValue, char *charValue, void *ptr, ColumnType type)
 {
 	isEmpty=true;
@@ -218,6 +224,11 @@ void Table::Cell::SetByType(double numericValue, char *charValue, void *ptr, Col
 		ptr=(void*) charValue;
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 Table::ColumnType Table::Cell::EstimateColumnType(void) const
 {
 	if (c)

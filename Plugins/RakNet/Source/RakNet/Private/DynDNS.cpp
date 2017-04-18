@@ -100,6 +100,12 @@ void DynDNS::UpdateHostIPAsynch(const char *dnsHost, const char *newIPAddress, c
 	getString+=outputData;
 	getString+="User-Agent: Jenkins Software LLC - PC - 1.0\n\n";
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void DynDNS::Update(void)
 {
 	if (connectPhase==CP_IDLE)
@@ -249,5 +255,8 @@ void DynDNS::Update(void)
 	}
 }
 
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 #endif // _RAKNET_SUPPORT_DynDNS

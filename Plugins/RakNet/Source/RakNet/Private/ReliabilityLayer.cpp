@@ -582,7 +582,7 @@ void ReliabilityLayer::FreeThreadSafeMemory( void )
 	delayList.Clear(__FILE__, __LINE__);
 #endif
 
-    unreliableWithAckReceiptHistory.Clear(false, _FILE_AND_LINE_);
+	unreliableWithAckReceiptHistory.Clear(false, _FILE_AND_LINE_);
 
 	packetsToSendThisUpdate.Clear(false, _FILE_AND_LINE_);
 	packetsToSendThisUpdate.Preallocate(512, _FILE_AND_LINE_);
@@ -736,7 +736,7 @@ bool ReliabilityLayer::HandleSocketReceiveFromConnectedPlayer(
 		}
 		for (i=0; i<incomingAcks.ranges.Size();i++)
 		{
-            if (incomingAcks.ranges[i].minIndex>incomingAcks.ranges[i].maxIndex || (incomingAcks.ranges[i].maxIndex == (uint24_t)(0xFFFFFFFF)))
+			if (incomingAcks.ranges[i].minIndex>incomingAcks.ranges[i].maxIndex || (incomingAcks.ranges[i].maxIndex == (uint24_t)(0xFFFFFFFF)))
 			{
 				RakAssert(incomingAcks.ranges[i].minIndex<=incomingAcks.ranges[i].maxIndex);
 
@@ -3204,12 +3204,12 @@ InternalPacket * ReliabilityLayer::BuildPacketFromSplitPacketList( SplitPacketCh
 	internalPacket->data = (unsigned char*) rakMalloc_Ex( (size_t) BITS_TO_BYTES( internalPacket->dataBitLength ), _FILE_AND_LINE_ );
 	internalPacket->allocationScheme=InternalPacket::NORMAL;
 
-    BitSize_t offset = 0;
+	BitSize_t offset = 0;
 	for (j=0; j < splitPacketChannel->splitPacketList.Size(); j++)
 	{
 		splitPacket=splitPacketChannel->splitPacketList[j];
-        memcpy(internalPacket->data + BITS_TO_BYTES(offset), splitPacket->data, (size_t)BITS_TO_BYTES(splitPacketChannel->splitPacketList[j]->dataBitLength));
-        offset += splitPacketChannel->splitPacketList[j]->dataBitLength;
+		memcpy(internalPacket->data + BITS_TO_BYTES(offset), splitPacket->data, (size_t)BITS_TO_BYTES(splitPacketChannel->splitPacketList[j]->dataBitLength));
+		offset += splitPacketChannel->splitPacketList[j]->dataBitLength;
 	}
 
 	for (j=0; j < splitPacketChannel->splitPacketList.Size(); j++)
@@ -3223,6 +3223,11 @@ InternalPacket * ReliabilityLayer::BuildPacketFromSplitPacketList( SplitPacketCh
 #endif
 }
 //-------------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 InternalPacket * ReliabilityLayer::BuildPacketFromSplitPacketList( SplitPacketIdType splitPacketId, CCTimeType time,
 																  RakNetSocket2 *s, SystemAddress &systemAddress, RakNetRandom *rnr, 
 																  BitStream &updateBitStream)
@@ -3253,6 +3258,9 @@ InternalPacket * ReliabilityLayer::BuildPacketFromSplitPacketList( SplitPacketId
 		return 0;
 	}
 }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 /*
 //-------------------------------------------------------------------------------------------------------
 // Delete any unreliable split packets that have long since expired

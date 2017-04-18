@@ -204,7 +204,10 @@ struct UDPProxyCoordinatorFramework : public SampleFramework
 	RakNet::UDPProxyCoordinator *udppc;
 };
 
-
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4996) // Disable deprecation
+#endif
 
 struct UDPProxyServerFramework : public SampleFramework, public RakNet::UDPProxyServerResultHandler
 {
@@ -307,6 +310,10 @@ struct UDPProxyServerFramework : public SampleFramework, public RakNet::UDPProxy
 
 	RakNet::UDPProxyServer *udpps;
 };
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 struct CloudServerFramework : public SampleFramework
 {

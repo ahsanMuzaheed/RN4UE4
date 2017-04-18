@@ -120,6 +120,12 @@ void NatTypeDetectionServer::Shutdown()
 		RakNet::OP_DELETE(bufferedPackets.Pop(), _FILE_AND_LINE_);
 	bufferedPacketsMutex.Unlock();
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 void NatTypeDetectionServer::Update(void)
 {
 	int i=0;
@@ -350,6 +356,11 @@ void NatTypeDetectionServer::Update(void)
 		i++;
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 PluginReceiveResult NatTypeDetectionServer::OnReceive(Packet *packet)
 {
 	switch (packet->data[0])

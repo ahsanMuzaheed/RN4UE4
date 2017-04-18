@@ -370,6 +370,12 @@ bool TM_TeamMember::LeaveTeam(TM_Team* team, NoTeamId _noTeamSubcategory)
 }
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#pragma warning(disable: 4457)
+#pragma warning(disable: 4458)
+#endif
 
 bool TM_TeamMember::LeaveAllTeams(NoTeamId noTeamSubcategory)
 {
@@ -1180,6 +1186,10 @@ void TM_World::DereferenceTeam(TM_Team *team, NoTeamId noTeamSubcategory)
 		}
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

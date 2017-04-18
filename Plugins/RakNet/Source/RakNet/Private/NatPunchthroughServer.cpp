@@ -434,6 +434,12 @@ void NatPunchthroughServer::OnClientReady(Packet *packet)
 		StartPunchthroughForUser(users[i]);
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void NatPunchthroughServer::OnGetMostRecentPort(Packet *packet)
 {
 	RakNet::BitStream bsIn(packet->data, packet->length, false);
@@ -567,6 +573,11 @@ void NatPunchthroughServer::OnGetMostRecentPort(Packet *packet)
 
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void NatPunchthroughServer::StartPunchthroughForUser(User *user)
 {
 	if (user->isReady==false)

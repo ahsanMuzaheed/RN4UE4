@@ -287,6 +287,11 @@ bool UDPProxyClient::PingServerGroup::AreAllServersPinged(void) const
 	return true;
 }
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void UDPProxyClient::PingServerGroup::SendPingedServersToCoordinator(RakPeerInterface *rakPeerInterface)
 {
 	BitStream outgoingBs;
@@ -304,6 +309,11 @@ void UDPProxyClient::PingServerGroup::SendPingedServersToCoordinator(RakPeerInte
 	}
 	rakPeerInterface->Send(&outgoingBs, MEDIUM_PRIORITY, RELIABLE_ORDERED, 0, coordinatorAddressForPings, false);
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void UDPProxyClient::Clear(void)
 {
 	for (unsigned int i=0; i < pingServerGroups.Size(); i++)

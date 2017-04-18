@@ -63,6 +63,12 @@ void PacketizedTCP::Send( const char *data, unsigned length, const SystemAddress
 	lengthsArray[1]=length;
 	TCPInterface::SendList(dataArray,lengthsArray,2,systemAddress,broadcast);
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 bool PacketizedTCP::SendList( const char **data, const unsigned int *lengths, const int numParameters, const SystemAddress &systemAddress, bool broadcast )
 {
 	if (isStarted.GetValue()==0)
@@ -101,6 +107,11 @@ bool PacketizedTCP::SendList( const char **data, const unsigned int *lengths, co
 	}	
 	return TCPInterface::SendList(dataArray,lengthsArray,numParameters+1,systemAddress,broadcast);
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void PacketizedTCP::PushNotificationsToQueues(void)
 {
 	SystemAddress sa;

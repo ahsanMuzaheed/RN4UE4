@@ -576,6 +576,12 @@ void TCPInterface::DetachPlugin( PluginInterface2 *plugin )
 		plugin->SetTCPInterface(0);
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 void TCPInterface::CloseConnection( SystemAddress systemAddress )
 {
 	if (isStarted.GetValue()==0)
@@ -615,6 +621,11 @@ void TCPInterface::CloseConnection( SystemAddress systemAddress )
 		activeSSLConnections.RemoveAtIndex(index);
 #endif
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void TCPInterface::DeallocatePacket( Packet *packet )
 {
 	if (packet==0)

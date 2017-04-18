@@ -23,6 +23,11 @@
 //#include <stdlib.h>
 #include "Itoa.h"
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 using namespace RakNet;
 
 //DataStructures::MemoryPool<RakString::SharedString> RakString::pool;
@@ -522,14 +527,14 @@ void RakString::FromWideChar(const wchar_t *source)
 
 
 
-                          WC_COMPOSITECHECK,     // Check for accented characters
+						  WC_COMPOSITECHECK,     // Check for accented characters
 
-                          source,         // Source Unicode string
-                          -1,                    // -1 means string is zero-terminated
-                          sharedString->c_str,          // Destination char string
-                          bufSize,  // Size of buffer
-                          NULL,                  // No default character
-                          NULL );                // Don't care about this flag
+						  source,         // Source Unicode string
+						  -1,                    // -1 means string is zero-terminated
+						  sharedString->c_str,          // Destination char string
+						  bufSize,  // Size of buffer
+						  NULL,                  // No default character
+						  NULL );                // Don't care about this flag
 
 
 }
@@ -633,7 +638,7 @@ void RakString::Erase(unsigned int index, unsigned int count)
 {
 	size_t len = GetLength();
 	RakAssert(index+count <= len);
-        
+		
 	Clone();
 	unsigned i;
 	for (i=index; i < len-count; i++)
@@ -1688,3 +1693,5 @@ int main(void)
 	return 1;
 }
 */
+
+#pragma warning(pop)

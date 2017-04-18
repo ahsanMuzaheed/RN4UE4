@@ -334,6 +334,12 @@ void RelayPlugin::NotifyUsersInRoom(RP_Group *room, int msg, const RakString& me
 		SendUnified(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, room->usersInRoom[i].guid, false);
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 void RelayPlugin::SendMessageToRoom(StrAndGuidAndRoom **strAndGuidSender, BitStream* message)
 {
 	if ((*strAndGuidSender)->currentRoom.IsEmpty())
@@ -362,6 +368,11 @@ void RelayPlugin::SendMessageToRoom(StrAndGuidAndRoom **strAndGuidSender, BitStr
 		}
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void RelayPlugin::SendChatRoomsList(RakNetGUID target)
 {
 	BitStream bsOut;

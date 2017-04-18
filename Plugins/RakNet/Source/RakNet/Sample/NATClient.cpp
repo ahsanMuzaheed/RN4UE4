@@ -85,6 +85,11 @@ void ANATClient::InitFramework(const ClientFeatureList clientFeatureList)
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4458) // Disable deprecation
+#endif
+
 void ANATClient::PrintPacketMessages(RakNet::Packet* packet, RakNet::RakPeerInterface* rakPeer)
 {
 
@@ -134,3 +139,7 @@ void ANATClient::PrintPacketMessages(RakNet::Packet* packet, RakNet::RakPeerInte
 		break;
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif

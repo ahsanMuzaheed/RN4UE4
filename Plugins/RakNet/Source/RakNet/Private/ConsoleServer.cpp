@@ -102,6 +102,12 @@ void ConsoleServer::RemoveCommandParser(CommandParserInterface *commandParserInt
 		}
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 void ConsoleServer::Update(void)
 {
 	unsigned i;
@@ -293,6 +299,10 @@ void ConsoleServer::Update(void)
 		p = transport->Receive();
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
 void ConsoleServer::ListParsers(SystemAddress systemAddress)
 {

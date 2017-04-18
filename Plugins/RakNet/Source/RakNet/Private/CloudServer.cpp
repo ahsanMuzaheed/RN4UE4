@@ -528,6 +528,12 @@ void CloudServer::OnReleaseRequest(Packet *packet)
 		}
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4456) // Disable deprecation
+#endif
+
 void CloudServer::OnGetRequest(Packet *packet)
 {
 	RakNet::BitStream bsIn(packet->data, packet->length, false);
@@ -787,6 +793,11 @@ void CloudServer::OnUnsubscribeRequest(Packet *packet)
 		remoteSystems.RemoveAtIndex(remoteSystemIndex, _FILE_AND_LINE_);
 	}
 }
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+
 void CloudServer::OnServerToServerGetRequest(Packet *packet)
 {
 //	unsigned int remoteServerIndex;
