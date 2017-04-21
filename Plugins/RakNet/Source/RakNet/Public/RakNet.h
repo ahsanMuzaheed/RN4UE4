@@ -2,12 +2,9 @@
 
 #pragma once
 
-#include "ModuleManager.h"
+#include "IRakNet.h"
 
-//#include "UDPProxyServer.h"
-
-
-class FRakNetModule : public IModuleInterface
+class FRakNet : public IRakNet
 {
 public:
 

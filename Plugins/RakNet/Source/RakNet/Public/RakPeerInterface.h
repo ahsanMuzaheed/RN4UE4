@@ -25,6 +25,8 @@
 #include "RakNetSmartPtr.h"
 #include "RakNetSocket2.h"
 
+#include <functional>
+
 namespace RakNet
 {
 // Forward declarations
@@ -546,6 +548,8 @@ public:
 	/// If the incoming datagram has an IP address that matches a known address from your game, then check the first byte of data.
 	/// For RakNet connected systems, the first bit is always 1. So for your own game packets, make sure the first bit is always 0.
 	virtual void SetIncomingDatagramEventHandler( bool (*_incomingDatagramEventHandler)(RNS2RecvStruct *) )=0;
+
+	virtual void SetIncomingPacketEventHandler(std::function<bool(const Packet*)> EventHandler) = 0;
 
 	// --------------------------------------------------------------------------------------------Network Simulator Functions--------------------------------------------------------------------------------------------
 	/// Adds simulated ping and packet loss to the outgoing data flow.

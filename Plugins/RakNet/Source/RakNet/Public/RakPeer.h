@@ -582,6 +582,7 @@ public:
 	/// This can be used to filter incoming datagrams by system, or to share a recvfrom socket with RakPeer
 	/// RNS2RecvStruct will only remain valid for the duration of the call
 	virtual void SetIncomingDatagramEventHandler( bool (*_incomingDatagramEventHandler)(RNS2RecvStruct *) );
+	virtual void SetIncomingPacketEventHandler(std::function<bool(const Packet*)> EventHandler);
 
 	// --------------------------------------------------------------------------------------------Network Simulator Functions--------------------------------------------------------------------------------------------
 	/// Adds simulated ping and packet loss to the outgoing data flow.
@@ -975,6 +976,7 @@ protected:
 	RakNet::TimeMS unreliableTimeout;
 
 	bool (*incomingDatagramEventHandler)(RNS2RecvStruct *);
+	std::function<bool(const Packet*)> incomingPacketEventHandler;
 
 	// Systems in this list will not go through the secure connection process, even when secure connections are turned on. Wildcards are accepted.
 	DataStructures::List<RakNet::RakString> securityExceptionList;

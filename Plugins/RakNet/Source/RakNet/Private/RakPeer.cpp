@@ -2999,6 +2999,12 @@ void RakPeer::SetIncomingDatagramEventHandler( bool (*_incomingDatagramEventHand
 {
 	incomingDatagramEventHandler=_incomingDatagramEventHandler;
 }
+
+void RakPeer::SetIncomingPacketEventHandler(std::function<bool(const Packet*)> EventHandler)
+{
+	incomingPacketEventHandler = EventHandler;
+}
+
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 bool RakPeer::SendOutOfBand(const char *host, unsigned short remotePort, const char *data, BitSize_t dataLength, unsigned connectionSocketIndex )
 {
@@ -4458,6 +4464,12 @@ void RakPeer::ClearRequestedConnectionList(void)
 }
 inline void RakPeer::AddPacketToProducer(RakNet::Packet *p)
 {
+	if (incomingPacketEventHandler && incomingPacketEventHandler(p))
+	{
+		DeallocatePacket(p);
+		return;
+	}
+
 	packetReturnMutex.Lock();
 	packetReturnQueue.Push(p,_FILE_AND_LINE_);
 	packetReturnMutex.Unlock();

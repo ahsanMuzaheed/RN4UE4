@@ -12,5 +12,5 @@
 
 void RakSleep(unsigned int ms)
 {
-	FPlatformProcess::Sleep(ms);
+	FPlatformProcess::Sleep((float)ms / 1000);
 }

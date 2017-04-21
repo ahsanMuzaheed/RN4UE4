@@ -6,8 +6,11 @@ public class RakNet : ModuleRules
 {
 	public RakNet(TargetInfo Target)
 	{
-		Definitions.Add("_CRT_SECURE_NO_WARNINGS");
-		Definitions.Add("_WINSOCK_DEPRECATED_NO_WARNINGS");
+		Definitions.AddRange(new string[]
+		{
+			"_CRT_SECURE_NO_WARNINGS",
+			"_WINSOCK_DEPRECATED_NO_WARNINGS",
+		});
 
 		PublicIncludePaths.AddRange(new string[]
 		{
